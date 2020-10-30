@@ -30,7 +30,7 @@
         label="类型ID"
         width="120"
         >
-        <template slot-scope="scope">{{ scope.row.constantTypeID }}</template>
+        <template slot-scope="scope">{{ scope.row.constantTypeName }}</template>
       </el-table-column>
 
       <el-table-column

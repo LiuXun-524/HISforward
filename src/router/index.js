@@ -10,6 +10,7 @@ import findAllConstantItem from '@/components/findAllConstantItem'
 import constantItemAdd from '@/components/constantItemAdd.vue'
 import updateConType from '@/components/updateConType.vue'
 import updateConItem from '@/components/updateConItem.vue'
+import departmentFind from '@/components/departmentFind.vue'
 
 Vue.use(Router)
 
@@ -58,6 +59,12 @@ export default new Router({
           name: 'findAllConstantItem',
           component: findAllConstantItem
         },
+        {
+          path: '/departmentFind',
+          name: 'departmentFind',
+          component: departmentFind
+        },
+        
         {
           path: '/updateConType',
           name: 'updateConType',
