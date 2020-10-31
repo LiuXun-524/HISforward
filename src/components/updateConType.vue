@@ -1,6 +1,6 @@
 <template>
   <div>
-
+<el-dialog title="修改常数项类别" :visible.sync="dialogFormVisible" @closed="resetDialog">
   <el-form :model="constantTypeForm" ref="constantTypeForm" label-width="100px" class="constantTypeForm">
       <!-- prop指定的是验证规则 -->
     <el-form-item label="常数项名称" >
@@ -15,7 +15,7 @@
       <el-button @click="resetForm('constantTypeForm')">取消</el-button>
     </el-form-item>
   </el-form>
-
+</el-dialog>
   </div>
 </template>
 
@@ -23,11 +23,13 @@
   export default{
     data() {
       return {
+        dialogFormVisible:false,
         constantTypeForm: {
-          id: this.$route.query.id,
-          constantTypeCode: this.$route.query.constantTypeCode,
-          constantTypeName: this.$route.query.constantTypeName
+          id: '',
+          constantTypeCode: '',
+          constantTypeName: ''
         },
+
       }
     },
     /* props:['row'], */
@@ -39,6 +41,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.dialogFormVisible = false
             console.log(this.constantTypeForm)
             this.$axios.post("http://localhost:8082/sys/constantType/update",this.constantTypeForm)
             .then(res=>{
@@ -59,9 +62,17 @@
         });
       },
       resetForm(formName) {
+        this.dialogFormVisible = false
         this.$refs[formName].resetFields();
         this.$router.go(-1)
       },
+      resetDialog(){
+        this.constantTypeForm={
+          id: '',
+          constantTypeCode: '',
+          constantTypeName: ''
+        }
+      }
     },
   }
 </script>

@@ -1,17 +1,18 @@
 <template>
   <div>
-    <div class="header">
-       <el-tag  effect="dark" type="success">新增</el-tag>
-       <el-tag @click="delAll" effect="dark" type="danger">删除</el-tag>
-     </div>
+    <div id="headdder">
+      <div class="lrspace">
+      <el-button @click="updateAll" type="primary" size="small">刷新</el-button>
+      </div>
+      <div class="lrspace">
+      <el-button @click="delAll" type="warning" size="small">批量删除</el-button>
+      </div>
+      <div  class="lrspace" >
+      <constantItemAdd ></constantItemAdd>
+      </div>
 
-    <el-row id="elrow">
+    </div>
 
-        <constantItemAdd ></constantItemAdd>
-        <div>
-        <el-button type="primary" @click="updateAll" plain>刷新</el-button>
-        </div>
-    </el-row>
     <el-table
       ref="multipleTable"
       :data="tableData"
@@ -51,7 +52,6 @@
         <template slot-scope="scope">
          <el-button @click="update(scope.row)" type="primary" size="small">修改</el-button>
           <el-button @click="delete(scope.row)" type="danger" size="small">删除</el-button>
-          <el-button type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
 
@@ -66,6 +66,7 @@
   @current-change="changePage"
   >
 </el-pagination>
+<updateConItem ref="updaci"></updateConItem>
   </div>
 
 
@@ -73,13 +74,14 @@
 
 <script>
   import constantItemAdd from '@/components/constantItemAdd.vue'
+  import updateConItem from '@/components/updateConItem.vue'
   export default {
     data() {
       return {
         //tableData数据要请求后台查询得到
         tableData: [],
         multipleSelection: [],
-        pageSize:5,
+        pageSize:8,
         currentPage:1,
         total:0,
         pageCount:0,
@@ -88,7 +90,8 @@
       }
     },
     components:{
-      constantItemAdd
+      constantItemAdd,
+      updateConItem
     },
     mounted() {
 
@@ -97,7 +100,12 @@
     methods: {
       update(row) {
       //点击修改时触发
-            this.$router.push({path:'/updateConItem',query:row})
+      this.$refs.updaci.dialogFormVisible = true
+      this.$refs.updaci.ruleForm.id =row.id
+      this.$refs.updaci.ruleForm.constantTypeID =row.constantTypeID
+      this.$refs.updaci.ruleForm.constantName =row.constantName
+      this.$refs.updaci.ruleForm.constantCode =row.constantCode
+            // this.$router.push({path:'/updateConItem',query:row})
      },
      delete(row) {
        //点击修改时触发
@@ -170,11 +178,10 @@ this.$axios.get("http://localhost:8082/sys/constantItem/findAllConstantItemPage"
     display: flex;
     justify-content: space-around;
   }
-.header{
-  width:100%;
+#headdder{
   display: flex;
-  justify-content: flex-start;
-  margin:15px;
 }
-
+.lrspace{
+  margin: 0px 10px 5px 0px;
+}
 </style>

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <el-row id="elrow">
+    <div id="headdder">
+      <div class="lrspace">
+      <el-button @click="updateAll" type="primary" size="small">刷新</el-button>
+      </div>
+      <div class="lrspace">
+      <el-button @click="delAll" type="warning" size="small">批量删除</el-button>
+      </div>
+      <div  class="lrspace" >
+      <constantTypeAdd ></constantTypeAdd>
+      </div>
 
-        <constantTypeAdd ></constantTypeAdd>
-        <div>
-        <el-button type="primary" @click="updateAll" plain>刷新</el-button>
-        </div>
-    </el-row>
+    </div>
     <el-table
       ref="multipleTable"
       :data="tableData"
@@ -40,7 +45,6 @@
         <template slot-scope="scope">
          <el-button @click="update(scope.row)" type="primary" size="small">修改</el-button>
           <el-button @click="delete(scope.row)" type="danger" size="small">删除</el-button>
-          <el-button type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
 
@@ -56,6 +60,8 @@
   @current-change="changePage"
   >
 </el-pagination>
+
+<updateConType ref="updatect"></updateConType>
   </div>
 
 
@@ -63,13 +69,14 @@
 
 <script>
   import constantTypeAdd from '@/components/constantTypeAdd.vue'
+  import updateConType from '@/components/updateConType.vue'
   export default {
     data() {
       return {
         //tableData数据要请求后台查询得到
         tableData: [],
         multipleSelection: [],
-        pageSize:5,
+        pageSize:8,
         currentPage:1,
         total:0,
         pageCount:0,
@@ -78,6 +85,7 @@
     },
     components:{
       constantTypeAdd,
+      updateConType
     },
     mounted() {
       /* this.$axios.get("http://localhost:8082/sys/constantType/findAll")
@@ -90,7 +98,12 @@
     methods: {
       update(row) {
       //点击修改时触发
-            this.$router.push({path:'/updateConType',query:row})
+          this.$refs.updatect.dialogFormVisible = true
+          this.$refs.updatect.constantTypeForm.id = row.id
+          this.$refs.updatect.constantTypeForm.constantTypeCode = row.constantTypeCode
+          this.$refs.updatect.constantTypeForm.constantTypeName = row.constantTypeName
+
+            // this.$router.push({path:'/updateConType',query:row})
      },
      delete(row) {
        //点击修改时触发
@@ -99,6 +112,21 @@
 ,
       updateAll(){
          this.findall()
+      },
+      delAll(){
+        this.ids=[]
+        for(let i=0;i<this.multipleSelection.length;i++){
+          let id = this.multipleSelection[i].id
+          this.ids.push(id)
+        }
+        let idsstr = this.ids.toString()
+        this.$axios.get("http://localhost:8082/sys/constantType/delAll",{params:{'idsstr':idsstr}})
+        .then(res=>{
+          console.log(res.data)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
       },
       toggleSelection(rows) {
         if (rows) {
@@ -143,5 +171,10 @@ this.$axios.get("http://localhost:8082/sys/constantType/findAllConstantTypePage"
     display: flex;
     justify-content: space-around;
   }
-
+#headdder{
+  display: flex;
+}
+.lrspace{
+  margin: 0px 15px 0px 0px;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
 
-  <el-button type="primary" @click="dialogFormVisible = true"  plain>添加</el-button>
+  <el-button type="success" @click="dialogFormVisible = true"  size="small">新增</el-button>
 
   <el-dialog title="添加常数项类别" :visible.sync="dialogFormVisible">
   <el-form :model="constantTypeForm" ref="constantTypeForm" label-width="100px" class="constantTypeForm">
@@ -10,7 +10,7 @@
       <el-input v-model="constantTypeForm.constantTypeName"></el-input>
     </el-form-item>
     <el-form-item label="常数项编码" >
-      <el-input v-model="constantTypeForm.constantTypeCode" placeholder="一般为常数项名称的全拼的大写首字母"></el-input>
+      <el-input v-model="constantTypeForm.constantTypeCode" ></el-input>
     </el-form-item>
 
     <el-form-item>

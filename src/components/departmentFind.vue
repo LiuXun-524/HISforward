@@ -1,18 +1,23 @@
 <template>
   <div>
-    <el-button @click="findall">清除筛选</el-button>
-    <el-dropdown @command="handleCommandCate">
-      <el-button size="medium" type="primary">
+
+      <el-button @click="findall" type="primary" size="small">刷新</el-button>
+      <el-button @click="findall" type="success" size="small">新增</el-button>
+      <el-button @click="findall" type="warning" size="small">清除筛选</el-button>
+      <el-button @click="delAll" type="danger" size="small">批量删除</el-button>
+
+    <el-dropdown @command="ParamHandleCommandByDcid" id="firstElDrop">
+      <el-button size="small" type="primary">
         筛选科室分类<i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown" >
-        <el-dropdown-item :command="dc.id" v-for="dc in deptCate" :key="dc.id"  @click="handleCommandCate">{{dc.constantName}}</el-dropdown-item>
+        <el-dropdown-item :command="dc.id" v-for="dc in deptCate" :key="dc.id" >{{dc.constantName}}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
 
 
     <el-dropdown @command="ParamHandleCommand">
-      <el-button size="medium" type="primary">
+      <el-button size="small" type="primary">
         筛选科室类型<i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
@@ -68,9 +73,8 @@
       label="操作"
       width="200">
       <template slot-scope="scope">
-       <el-button @click="update(scope.row)" type="primary" size="small">修改</el-button>
-        <el-button @click="delete(scope.row)" type="danger" size="small">删除</el-button>
-        <el-button type="text" size="small">编辑</el-button>
+         <el-button @click="update(scope.row)" type="primary" size="small">修改</el-button>
+         <el-button @click="delete(scope.row)" type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
 
@@ -99,19 +103,18 @@
         pageCount:0,
         loading: true,
         deptCate:[],
-/* Department:{
-        deptCategoryID:'',
-        deptType:'',
-} */
+        Department:{
+          deptCategoryID:'',
+          deptType:'',
+        }
 
-        deptCategoryID:'',
-        deptType:'', 
+
 
 
       }
     },
     mounted() {
-      this.findall()
+      this.selectallByParam()
        this.$axios.get("http://localhost:8082/sys/constantType/findAllDeptCate",{params:{
        constantTypeName:'科室分类'}})
            .then(res=>{
@@ -126,6 +129,19 @@
            })
     },
     methods: {
+      ParamHandleCommandByDcid(command){
+        this.Department = {
+          deptCategoryID:'',
+          deptType:'',
+        }
+        console.log("this.Department.deptCategoryID请看这里**********")
+        console.log(this.Department.deptCategoryID)
+        this.Department.deptCategoryID = command
+        console.log(this.Department.deptCategoryID)
+
+        this.$message('查询' + command);
+        this.selectallByParam()
+      },
       ParamHandleCommand(command){
         this.Department = {
           deptCategoryID:'',
@@ -140,26 +156,30 @@
         this.selectallByParam()
       },
 
+selectallByParam(){
+        console.log("往后台传的什么数据：Department请看这里")
+        console.log(this.Department)
+        this.loading = true
+        this.$axios.get("http://localhost:8082/sys/department/selectallByParam",{params:{
+          currentPage:this.currentPage,
+          pageSize:this.pageSize,
+          deptCategoryID:this.Department.deptCategoryID,
+          deptType:this.Department.deptType ,
+          }})
+              .then(res=>{
+                console.log("后台返的什么数据")
+                console.log(res.data.list)
+                this.tableData = res.data.list
+                this.total = res.data.total
+                this.pageCount = res.data.pages
+                this.loading=false
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+        },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-handleCommandCate(command){
+/* handleCommandCate(command){
   this.$message('查询' + command);
   this.loading = true
   console.log(command)
@@ -191,28 +211,22 @@ handleCommandCate(command){
                .catch(err=>{
                  console.log(err)
                })
+      },*/
+delAll(){
+        this.ids=[]
+        for(let i=0;i<this.multipleSelection.length;i++){
+          let id = this.multipleSelection[i].id
+          this.ids.push(id)
+        }
+        let idsstr = this.ids.toString()
+        this.$axios.get("http://localhost:8082/sys/constantType/delAll",{params:{'idsstr':idsstr}})
+        .then(res=>{
+          console.log(res.data)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
       },
-      selectallByParam(){
-        console.log("Department请看这里")
-        console.log(this.Department)
-        this.loading = true
-        this.$axios.post("http://localhost:8082/sys/department/selectallByParam",{params:{
-          currentPage:this.currentPage,
-          pageSize:this.pageSize,
-          deptCategoryID:this.deptCategoryID,
-          deptType:this.deptType ,
-          }})
-              .then(res=>{
-                console.log(res.data)
-                this.tableData = res.data.list
-                this.total = res.data.total
-                this.pageCount = res.data.pages
-                this.loading=false
-              })
-              .catch(err=>{
-                console.log(err)
-              })
-        },
       findall(){
         //请求后台进行查询，携带当前页码和每页条数
         this.loading = true
@@ -250,7 +264,7 @@ toggleSelection(rows) {
     this.currentPage = currentPage
     //调用分页的函数（根据上面两个参数来做）
 
-    this.findall()
+    this.selectallByParam()
 
 
   }
@@ -268,4 +282,9 @@ toggleSelection(rows) {
     .el-icon-arrow-down {
       font-size: 12px;
     }
+    #firstElDrop{
+      margin-left: 5px;
+    }
+
+
 </style>

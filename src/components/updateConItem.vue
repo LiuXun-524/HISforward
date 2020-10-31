@@ -1,4 +1,5 @@
 <template>
+<el-dialog title="修改常数项" :visible.sync="dialogFormVisible" @closed="resetDialog">
 
  <el-form :model="ruleForm"   ref="ruleForm" label-width="100px" class="demo-ruleForm">
     <el-form-item label="常数类别" prop="ct">
@@ -17,7 +18,7 @@
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
   </el-form>
-
+</el-dialog>
 
 
 </template>
@@ -26,11 +27,12 @@
   export default {
     data() {
       return {
+        dialogFormVisible:false,
         ruleForm: {
-          id:this.$route.query.id,
-          constantTypeID:this.$route.query.constantTypeID,
-          constantName:this.$route.query.constantName,
-          constantCode:this.$route.query.constantCode,
+          id:"",
+          constantTypeID:'',
+          constantName:'',
+          constantCode:'',
         },
 
         //常数类别的列表
@@ -52,6 +54,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.dialogFormVisible = false
             console.log(this.ruleForm)
             this.$axios.post("http://localhost:8082/sys/constantItem/add",this.ruleForm)
             .then(res=>{
@@ -74,8 +77,16 @@
               });
             },
       resetForm(formName) {
+        this.dialogFormVisible = false
         this.$refs[formName].resetFields();
       },
+      resetDialog(){
+        this.constantTypeForm={
+          id: '',
+          constantTypeCode: '',
+          constantTypeName: ''
+        }
+      }
     }
   }
 </script>

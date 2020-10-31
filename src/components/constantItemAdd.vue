@@ -2,7 +2,7 @@
   <!-- <el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
  -->
  <div>
-<el-button type="primary" @click="dialogFormVisible = true"  plain>添加</el-button>
+<el-button type="success" @click="dialogFormVisible = true"  size="small">新增</el-button>
 
   <el-dialog title="添加常数项类别" :visible.sync="dialogFormVisible">
  <el-form :model="ruleForm"   ref="ruleForm" label-width="100px" class="demo-ruleForm">
