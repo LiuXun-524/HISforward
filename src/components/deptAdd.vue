@@ -67,7 +67,7 @@
             .catch(err=>{
               console.log(err)
             })
-      },                
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -76,7 +76,17 @@
             this.$axios.post("http://localhost:8082/sys/department/add",this.ruleForm)
             .then(res=>{
               console.log(res.data)
-              this.open2();
+              if(res.data.code==1){
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'success'
+                  });
+              }else{
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'warning'
+                  });
+              }
             })
             .catch(err=>{
               console.log(err)
@@ -87,12 +97,7 @@
           }
         });
       },
-      open2() {
-              this.$message({
-                message: '添加成功',
-                type: 'success'
-              });
-            },
+
       resetForm(formName) {
         this.dialogFormVisible = false
         this.$refs[formName].resetFields();

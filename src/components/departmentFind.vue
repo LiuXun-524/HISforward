@@ -1,32 +1,43 @@
 <template>
   <div>
+      <div id="headdder">
+        <div class="lrspace">
+        <el-button @click="findall" type="primary" size="small">刷新</el-button>
+        </div>
+        <div  class="lrspace" >
+        <deptAdd></deptAdd>
+        </div>
+        <div class="lrspace">
+        <el-button @click="delAll" type="danger" size="small">批量删除</el-button>
+        </div>
+        <div class="lrspace">
+        <el-button @click="findall" type="warning" size="small">清除筛选</el-button>
+        </div>
 
-      <el-button @click="findall" type="primary" size="small">刷新</el-button>
-      <el-button @click="findall" type="success" size="small">新增</el-button>
-      <el-button @click="findall" type="warning" size="small">清除筛选</el-button>
-      <el-button @click="delAll" type="danger" size="small">批量删除</el-button>
-
-    <el-dropdown @command="ParamHandleCommandByDcid" id="firstElDrop">
-      <el-button size="small" type="primary">
-        筛选科室分类<i class="el-icon-arrow-down el-icon--right"></i>
-      </el-button>
-      <el-dropdown-menu slot="dropdown" >
-        <el-dropdown-item :command="dc.id" v-for="dc in deptCate" :key="dc.id" >{{dc.constantName}}</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-
-
-    <el-dropdown @command="ParamHandleCommand">
-      <el-button size="small" type="primary">
-        筛选科室类型<i class="el-icon-arrow-down el-icon--right"></i>
-      </el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="1">临床</el-dropdown-item>
-        <el-dropdown-item command="2">医技</el-dropdown-item>
-        <el-dropdown-item command="3">财务</el-dropdown-item>
-        <el-dropdown-item command="4">行政</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+<div class="lrspace">
+        <el-dropdown @command="ParamHandleCommandByDcid" id="firstElDrop">
+          <el-button size="small" type="primary">
+            筛选科室分类<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-item :command="dc.id" v-for="dc in deptCate" :key="dc.id" >{{dc.constantName}}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+ </div>
+<div class="lrspace">
+        <el-dropdown @command="ParamHandleCommand">
+          <el-button size="small" type="primary">
+            筛选科室类型<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">临床</el-dropdown-item>
+            <el-dropdown-item command="2">医技</el-dropdown-item>
+            <el-dropdown-item command="3">财务</el-dropdown-item>
+            <el-dropdown-item command="4">行政</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+ </div>
+      </div>
 
   <el-table
 
@@ -88,10 +99,13 @@
     @current-change="changePage"
     >
   </el-pagination>
+  <updateDept ref="updaDept"></updateDept>
   </div>
 </template>
 
 <script>
+  import deptAdd from '@/components/deptAdd.vue'
+  import updateDept from '@/components/updateDept.vue'
   export default{
     data() {
       return {
@@ -113,6 +127,10 @@
 
       }
     },
+    components:{
+      deptAdd,
+      updateDept
+    },
     mounted() {
       this.selectallByParam()
        this.$axios.get("http://localhost:8082/sys/constantType/findAllDeptCate",{params:{
@@ -129,6 +147,20 @@
            })
     },
     methods: {
+update(row) {
+      //点击修改时触发
+      this.$refs.updaDept.dialogFormVisible = true
+      this.$refs.updaDept.ruleForm.id =row.id
+      this.$refs.updaDept.ruleForm.constantName =row.constantName
+      
+      this.$refs.updaDept.ruleForm.deptName =row.deptName
+      this.$refs.updaDept.ruleForm.deptCode =row.deptCode
+            // this.$router.push({path:'/updateConItem',query:row})
+     },
+     delete(row) {
+       //点击修改时触发
+             console.log(row);
+      },
       ParamHandleCommandByDcid(command){
         this.Department = {
           deptCategoryID:'',
@@ -286,5 +318,10 @@ toggleSelection(rows) {
       margin-left: 5px;
     }
 
-
+#headdder{
+  display: flex;
+}
+.lrspace{
+  margin: 0px 15px 0px 0px;
+}
 </style>

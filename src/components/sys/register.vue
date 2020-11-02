@@ -114,7 +114,7 @@
       .catch(err=>{
         console.log(err)
       });
-      this.$axios.get("http://localhost:8082/sys/registLevel/selectall")
+      this.$axios.get("http://localhost:8082/sys/registlevel/selectall")
       .then(res=>{
         console.log(res.data)
         this.registLeList=res.data

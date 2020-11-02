@@ -8,11 +8,10 @@
       <el-button @click="delAll" type="warning" size="small">批量删除</el-button>
       </div>
       <div  class="lrspace" >
-      <constantItemAdd ></constantItemAdd>
+      <registLeAdd ></registLeAdd>
       </div>
 
     </div>
-
     <el-table
       ref="multipleTable"
       :data="tableData"
@@ -28,23 +27,34 @@
       </el-table-column>
 
       <el-table-column
-        label="类型ID"
+        label="号别编码"
         width="120"
         >
-        <template slot-scope="scope">{{ scope.row.constantTypeName }}</template>
+        <template slot-scope="scope">{{ scope.row.registCode }}</template>
       </el-table-column>
 
       <el-table-column
-        prop="constantCode"
-        label="常数项编码"
+        prop="registName"
+        label="号别名称"
         width="120">
       </el-table-column>
 
       <el-table-column
-        prop="constantName"
-        label="常数项名称"
+        prop="registFee"
+        label="挂号费"
         width="120">
       </el-table-column>
+      <el-table-column
+        prop="sequenceNo"
+        label="顺序号"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="registQuota"
+        label="挂号限额"
+        width="120">
+      </el-table-column>
+
 
       <el-table-column
         label="操作"
@@ -54,6 +64,7 @@
           <el-button @click="delete(scope.row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
+
 
     </el-table>
 
@@ -66,15 +77,16 @@
   @current-change="changePage"
   >
 </el-pagination>
-<updateConItem ref="updaci"></updateConItem>
+
+<updateRegisterLe ref="updateRef"></updateRegisterLe>
   </div>
 
 
 </template>
 
 <script>
-  import constantItemAdd from '@/components/constantItemAdd.vue'
-  import updateConItem from '@/components/updateConItem.vue'
+  import registLeAdd from '@/components/registLeAdd.vue'
+  import updateRegisterLe from '@/components/updateRegisterLe.vue'
   export default {
     data() {
       return {
@@ -85,13 +97,12 @@
         currentPage:1,
         total:0,
         pageCount:0,
-        //用于存放所有要被删除的id的集合
-        ids:[],
+
       }
     },
     components:{
-      constantItemAdd,
-      updateConItem
+      registLeAdd,
+      updateRegisterLe
     },
     mounted() {
 
@@ -100,12 +111,16 @@
     methods: {
       update(row) {
       //点击修改时触发
-      this.$refs.updaci.dialogFormVisible = true
-      this.$refs.updaci.ruleForm.id =row.id
-      this.$refs.updaci.ruleForm.constantTypeName =row.constantTypeName
-      this.$refs.updaci.ruleForm.constantName =row.constantName
-      this.$refs.updaci.ruleForm.constantCode =row.constantCode
-            // this.$router.push({path:'/updateConItem',query:row})
+          this.$refs.updateRef.dialogFormVisible = true
+          this.$refs.updateRef.ruleForm.id = row.id
+          this.$refs.updateRef.ruleForm.registCode = row.registCode
+          this.$refs.updateRef.ruleForm.registName = row.registName
+          this.$refs.updateRef.ruleForm.registFee = row.registFee
+          this.$refs.updateRef.ruleForm.sequenceNo = row.sequenceNo
+          this.$refs.updateRef.ruleForm.registQuota = row.registQuota
+          this.$refs.updateRef.ruleForm.constantTypeName = row.constantTypeName
+
+            // this.$router.push({path:'/updateConType',query:row})
      },
      delete(row) {
        //点击修改时触发
@@ -116,21 +131,18 @@
          this.findall()
       },
       delAll(){
-        //每次都要先清空ids，防止累加
         this.ids=[]
-        //把this.multipleSelection
         for(let i=0;i<this.multipleSelection.length;i++){
           let id = this.multipleSelection[i].id
-
           this.ids.push(id)
         }
-        //把循环得到的ids这个数组转成用逗号分隔的字符串
         let idsstr = this.ids.toString()
-        console.log(idsstr)
-        //请求后台、删除
-        this.$axios.get("http://localhost:8082/sys/constantItem/delAll",{params:{'idsstr':idsstr}})
+        this.$axios.get("http://localhost:8082/sys/registlevel/delAll",{params:{'idsstr':idsstr}})
         .then(res=>{
           console.log(res.data)
+        })
+        .catch(err=>{
+          console.log(err)
         })
       },
       toggleSelection(rows) {
@@ -143,9 +155,7 @@
         }
       },
       handleSelectionChange(val) {
-        console.log(val)
         this.multipleSelection = val;
-
       },
       changePage(currentPage){
         this.currentPage = currentPage
@@ -154,7 +164,7 @@
       }
 ,findall(){
   //请求后台进行查询，携带当前页码和每页条数
-this.$axios.get("http://localhost:8082/sys/constantItem/findAllConstantItemPage",{params:{
+this.$axios.get("http://localhost:8082/sys/registlevel/findAllPage",{params:{
   currentPage:this.currentPage,
   pageSize:this.pageSize
 }})
@@ -182,6 +192,6 @@ this.$axios.get("http://localhost:8082/sys/constantItem/findAllConstantItemPage"
   display: flex;
 }
 .lrspace{
-  margin: 0px 10px 5px 0px;
+  margin: 0px 15px 0px 0px;
 }
 </style>

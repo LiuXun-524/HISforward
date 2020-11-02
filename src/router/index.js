@@ -11,6 +11,12 @@ import constantItemAdd from '@/components/constantItemAdd.vue'
 import updateConType from '@/components/updateConType.vue'
 import updateConItem from '@/components/updateConItem.vue'
 import departmentFind from '@/components/departmentFind.vue'
+import registlevel from '@/components/registlevel.vue'
+import findAllExpenseClass from '@/components/findAllExpenseClass.vue'
+import findAllFmeditem from '@/components/findAllFmeditem.vue'
+
+
+import rule from '@/components/scheduling/rule.vue'
 
 Vue.use(Router)
 
@@ -37,9 +43,9 @@ export default new Router({
       name: 'constantItemAdd',
       component: constantItemAdd
     }, */
-        
+
     {
-      path: '/index',
+      path: '/',
       component: index,
       children:[
 
@@ -64,7 +70,7 @@ export default new Router({
           name: 'departmentFind',
           component: departmentFind
         },
-        
+
         {
           path: '/updateConType',
           name: 'updateConType',
@@ -75,6 +81,27 @@ export default new Router({
           name: 'updateConItem',
           component: updateConItem
         },
+        {
+          path: '/registlevel',
+          name: 'registlevel',
+          component: registlevel
+        },
+        {
+          path: '/findAllExpenseClass',
+          name: 'findAllExpenseClass',
+          component: findAllExpenseClass
+        },
+        {
+          path: '/findAllFmeditem',
+          name: 'findAllFmeditem',
+          component: findAllFmeditem
+        },
+        {
+          path: '/rule',
+          name: 'rule',
+          component: rule
+        },
+            
       ]
     },
   ]

@@ -30,7 +30,7 @@
         dialogFormVisible:false,
         ruleForm: {
           id:"",
-          constantTypeID:'',
+          constantTypeName:'',
           constantName:'',
           constantCode:'',
         },
@@ -82,9 +82,10 @@
       },
       resetDialog(){
         this.constantTypeForm={
-          id: '',
-          constantTypeCode: '',
-          constantTypeName: ''
+          id:"",
+          constantTypeName:'',
+          constantName:'',
+          constantCode:'',
         }
       }
     }
