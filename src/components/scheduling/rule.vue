@@ -2,7 +2,7 @@
   <!-- 选择-->
   <el-form ref="ruleForm" :model="ruleForm" label-width="100">
     <el-row>
-    <el-col :span="5">
+    <el-col :span="6">
       <el-form-item label="科室">
         <el-select v-model="ruleForm.deptID" placeholder="请选择科室" size="mini">
           <el-option v-for="item in deptList" :key="item.id" :value="item.id" :label="item.deptName"></el-option>
@@ -40,7 +40,7 @@
       >
       <template slot-scope="scope">{{ scope.row.realName }}</template>
     </el-table-column>
-    <el-table-column label="1上" width="50">
+    <el-table-column label="周一上午" width="50">
       <template slot-scope="scope">
         <el-checkbox v-model="tableData[scope.$index].x0" true-label="1" false-label="0"></el-checkbox>
       </template>
@@ -179,7 +179,7 @@ saveRule(){
     this.ruleMapList.push(ruleMap)
   }
   console.log(this.ruleMapList)
-  this.$axios.post("http://localhost:8081/rule/save",{ruleMapList:this.ruleMapList})
+  this.$axios.post("http://localhost:8081/rule/save",{rules:this.ruleMapList})
   .then(res=>{
     console.log(res.data)
     if(res.data.code==1){

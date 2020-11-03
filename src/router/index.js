@@ -17,6 +17,7 @@ import findAllFmeditem from '@/components/findAllFmeditem.vue'
 
 
 import rule from '@/components/scheduling/rule.vue'
+import schedulingMgr from '@/components/scheduling/schedulingMgr.vue'
 
 Vue.use(Router)
 
@@ -96,12 +97,13 @@ export default new Router({
           name: 'findAllFmeditem',
           component: findAllFmeditem
         },
+        
         {
-          path: '/rule',
-          name: 'rule',
-          component: rule
+          path: '/schedulingMgr',
+          name: 'schedulingMgr',
+          component: schedulingMgr
         },
-            
+
       ]
     },
   ]

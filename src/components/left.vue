@@ -32,7 +32,7 @@
         </el-menu-item-group>
           <el-menu-item-group>
               <template slot="title">排班管理</template>
-              <el-menu-item index="/rule">排班规则管理</el-menu-item>
+              <el-menu-item index="/schedulingMgr">排班规则管理</el-menu-item>
           </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
