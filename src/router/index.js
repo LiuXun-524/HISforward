@@ -14,6 +14,7 @@ import departmentFind from '@/components/departmentFind.vue'
 import registlevel from '@/components/registlevel.vue'
 import findAllExpenseClass from '@/components/findAllExpenseClass.vue'
 import findAllFmeditem from '@/components/findAllFmeditem.vue'
+import findAllRegister from '@/components/findAllRegister.vue'
 
 
 import rule from '@/components/scheduling/rule.vue'
@@ -97,11 +98,16 @@ export default new Router({
           name: 'findAllFmeditem',
           component: findAllFmeditem
         },
-        
+
         {
           path: '/schedulingMgr',
           name: 'schedulingMgr',
           component: schedulingMgr
+        },
+        {
+          path: '/findAllRegister',
+          name: 'findAllRegister',
+          component: findAllRegister
         },
 
       ]

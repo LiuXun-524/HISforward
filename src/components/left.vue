@@ -35,6 +35,10 @@
               <el-menu-item index="/schedulingMgr">排班规则管理</el-menu-item>
           </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="1-4">
+        <template slot="title">挂号管理</template>
+        <el-menu-item index="/findAllRegister">挂号管理</el-menu-item>
+      </el-submenu>
       <el-menu-item index="2">
         <i class="el-icon-menu"></i>
         <span slot="title">导航二</span>

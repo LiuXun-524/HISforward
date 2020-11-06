@@ -173,7 +173,7 @@ saveRule(){
   for (var i = 0; i < this.multipleSelection.length; i++) {
     let user = this.multipleSelection[i]
     let userId = user.id
-    let weekStr =""+user.x0+user.x1+user.x2+user.x3+user.x4+user.x5+user.x6+user.x7+user.x8+user.x9+user.x10+user.x12+user.x13
+    let weekStr =""+user.x0+user.x1+user.x2+user.x3+user.x4+user.x5+user.x6+user.x7+user.x8+user.x9+user.x10+user.x11+user.x12+user.x13
     console.log(weekStr)
     let ruleMap={deptID:this.ruleForm.deptID,ruleName:this.ruleForm.ruleName,userID:userId,week:weekStr}
     this.ruleMapList.push(ruleMap)

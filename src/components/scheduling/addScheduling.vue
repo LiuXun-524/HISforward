@@ -146,16 +146,16 @@
       },
       save(){
         this.scheduArray=[]
-         alert(this.ruleForm.startDate);
-         alert(this.ruleForm.endDate);
-         alert(this.ruleForm.deptID);
+         // alert(this.ruleForm.startDate);
+         // alert(this.ruleForm.endDate);
+         // alert(this.ruleForm.deptID);
          let usersels = this.multipleSelection
          for (var i = 0; i < usersels.length; i++) {
            let userid = usersels[i].userID
            let week = usersels[i].week
            let ruleID = usersels[i].id
-           alert("用户id"+userid)
-           alert("规则"+week)
+           // alert("用户id"+userid)
+           // alert("规则"+week)
            //每循环到一次，就拼装一个scheduling对象，放到scheduArray，为传入后台
            let scheduling={
              deptID:this.ruleForm.deptID,
