@@ -9,11 +9,11 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-
-      text-color="#000000"
-
-      :default-active="$router.path" router>
-      <el-submenu index="1" id="fontweight">
+      active-text-color="#409EFF"
+      text-color="#333"
+      style="font-weight: 800; "
+      >
+       <el-submenu index="1" id="fontweight">
         <template slot="title" >
           <i class="el-icon-location"></i>
           <span>系统管理</span>
@@ -36,12 +36,24 @@
           </el-menu-item-group>
       </el-submenu>
       <el-submenu index="1-4">
-        <template slot="title">挂号管理</template>
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <span>挂号管理</span>
+          </template>
         <el-menu-item index="/findAllRegister">挂号管理</el-menu-item>
       </el-submenu>
+      <el-submenu index="1-5">
+        <template slot="title">
+          <i class="el-icon-setting"></i>
+          <span>门诊医生</span>
+          </template>
+        <el-menu-item index="/docHome">门诊病历</el-menu-item>
+      </el-submenu>
+
       <el-menu-item index="2">
         <i class="el-icon-menu"></i>
         <span slot="title">导航二</span>
+
       </el-menu-item>
       <el-menu-item index="3" disabled>
         <i class="el-icon-document"></i>
@@ -80,6 +92,7 @@
     /* border: 1px solid #00BFFF; */
 
   }
+
 /* .el-submenu__title{
   font-size: 20px;
   font-weight: 600;

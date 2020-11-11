@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <el-container>
-      <el-header>H.I.S</el-header>
+      <el-header>东软医疗信息管理系统</el-header>
       <el-container>
         <el-aside width="200px">
           <leftMenu>
@@ -35,16 +35,16 @@
   }
 
   .el-header {
-    background-color: #B3C0D1;
-    color: #333;
+    background-color: #409EFF;
+    color: #F0F7FF;
     text-align: center;
     line-height: 60px;
   }
 
   .el-aside {
     height: 100%;
-    background-color: #D3DCE6;
-    color: #333;
+    background-color: #F0F7FF;
+    color: #409EFF;
 
     line-height: 200px;
   }

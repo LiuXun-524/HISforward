@@ -15,6 +15,7 @@ import registlevel from '@/components/registlevel.vue'
 import findAllExpenseClass from '@/components/findAllExpenseClass.vue'
 import findAllFmeditem from '@/components/findAllFmeditem.vue'
 import findAllRegister from '@/components/findAllRegister.vue'
+import docHome from '@/components/doc/docHome.vue'
 
 
 import rule from '@/components/scheduling/rule.vue'
@@ -108,6 +109,11 @@ export default new Router({
           path: '/findAllRegister',
           name: 'findAllRegister',
           component: findAllRegister
+        },
+        {
+          path: '/docHome',
+          name: 'docHome',
+          component: docHome
         },
 
       ]
