@@ -12,6 +12,7 @@
       active-text-color="#409EFF"
       text-color="#333"
       style="font-weight: 800; "
+      :default-active="$router.path" router
       >
        <el-submenu index="1" id="fontweight">
         <template slot="title" >

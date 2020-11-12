@@ -164,7 +164,7 @@
             usedRegistQuota:'',
             noon:'',
             registTime:'',
-            visitState:''
+            visitState:1
           },
           //结算类别列表，从后台获取
           settleList:[],

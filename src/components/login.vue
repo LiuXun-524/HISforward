@@ -28,11 +28,11 @@ export default{
      rules: {
        userName: [
          { required: true, message: '请输入用户名', trigger: 'blur' },
-         { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
+         { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
        ],
        password: [
          { required: true, message: '请填写密码', trigger: 'change' },
-         { min: 6, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur' }
+         { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
        ],
    }
  }
@@ -50,9 +50,10 @@ methods: {
               if(res.data.code == 0){
                 console.log(res.data.list[0])
                 let user = res.data.list[0]
+                sessionStorage.setItem("loginUserId",user.id);
                 sessionStorage.setItem("loginUser",user)
                 //登录成功回到首页，失败就在前台提示错误原因
-                this.$router.push({path:"/index"})
+                this.$router.push({path:"/"})
               }
 
             })
