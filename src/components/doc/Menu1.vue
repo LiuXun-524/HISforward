@@ -1,6 +1,6 @@
 <template>
   <div>
-        <el-row style="background-color: #EAF1F5;margin-top: -20px">
+        <el-row style="background-color: #EAF1F5;margin-top: -20px" >
             <el-col :span="8" style="margin-top: 4px;">
 
             </el-col>
@@ -156,7 +156,7 @@
         </el-row>
 
         <el-row style="text-align: left;">
-          <el-button type="text" icon="el-icon-success">
+          <el-button type="text" icon="el-icon-success" @click="saveCheck">
             <span>提交</span>
           </el-button>
         </el-row>
@@ -176,7 +176,7 @@
         multipleSelection:[],
         selectPatient:'',
         ruleFrom:{
-          caseNumber:this.$props.caseNumber,
+          caseNumber:this.$props.patient.caseNumber,
           registID:this.$props.patient.id,
           readme:'',
           present:'',
@@ -186,9 +186,7 @@
           physique:'',
           proposal:'',
           careful:'',
-          checkResult:'',
-          diagnosis:'',
-          handling:''
+
         }
       }
     },
@@ -220,7 +218,21 @@
 
           },
           saveCheck(){
-
+             if(this.$props.patient != null){
+               this.ruleFrom.caseNumber = this.$props.patient.caseNumber
+               this.ruleFrom.registID = this.$props.patient.id
+               this.$axios.post("http://localhost:8081/sys/medicalRecord/save",this.ruleFrom)
+               .then(res=>{
+                 console.log(res.data)
+                 if(res.data==null){
+                   console.log("储存成功")
+                 }else{
+                   console.log("储存失败")
+                 }
+               })
+             }else{
+               this.$message("请先选择患者")
+             }
           },
           cleanCheck(){
 

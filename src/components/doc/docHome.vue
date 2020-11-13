@@ -4,7 +4,7 @@
     width="300px"
     v-if="showMenu"
     >
-    <registerItem @<strong><strong>postReg</strong></strong>="getReg"></registerItem>
+    <registerItem @postReg="getReg"></registerItem>
     </el-aside>
 
     <el-main id="mianBlock">
@@ -15,7 +15,9 @@
           <el-tab-pane label="病历首页" name="first">
               <Menu1  :patient="patient" ></Menu1>
           </el-tab-pane>
-          <el-tab-pane label="检查申请" name="second">配置管理</el-tab-pane>
+          <el-tab-pane label="检查申请" name="second">
+              <menu2></menu2>
+          </el-tab-pane>
           <el-tab-pane label="检验申请" name="third">角色管理</el-tab-pane>
           <el-tab-pane label="门诊确诊" name="fourth">定时任务补偿</el-tab-pane>
           <el-tab-pane label="处置申请" name="fivth">定时任务补偿</el-tab-pane>
@@ -30,6 +32,7 @@
 <script>
   import registerItem from '@/components/doc/dco1/registerItem.vue'
   import Menu1 from '@/components/doc/Menu1.vue'
+  import menu2 from '@/components/doc/menu2.vue'
   export default{
     data() {
       return {
@@ -49,7 +52,8 @@
     },
     components:{
       registerItem,
-      Menu1
+      Menu1,
+      menu2
     },
     methods: {
       handleClick(tab, event) {
